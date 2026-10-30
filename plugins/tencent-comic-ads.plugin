@@ -1,0 +1,20 @@
+#!name = 腾讯动漫去广告
+#!desc = 去除腾讯动漫 开屏/插屏广告，规则见 conf/loon-routing.conf
+#!author = loon_script contributors
+#!date = 2026-10-29
+#!tag = 广告拦截,腾讯动漫
+#!loon_version = 3.5.1(983)
+#!system = iOS,iPadOS
+
+# 插件只负责路径级改写与 MITM；广告域 REJECT 与代理分流在 conf/loon-routing.conf。
+# 开屏素材必须用 reject，不能用 reject-img（透明图仍会创建开屏容器）。
+# 仅匹配 /operation/0/ 且 tp=sharp 的图片，避免误杀漫画图、封面、头像。
+
+[Rewrite]
+^https?://iphone\.ac\.qq\.com/.*/Support/bootScreen reject
+^https://manhua\.acimg\.cn/operation/0/[^/?]+\.jpg/0\?tp=sharp(?:&.*)?$ reject
+# 若 bootScreen 拦截后开屏仍在，取消下面一行注释后复测（较温和，先不动首页配置）
+# ^https?://iphone\.ac\.qq\.com/.*/Support/getSystemConf reject-200
+
+[Mitm]
+hostname = iphone.ac.qq.com, manhua.acimg.cn

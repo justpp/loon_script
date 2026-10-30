@@ -1,0 +1,22 @@
+#!name = QQ音乐去广告
+#!desc = 去除 QQ音乐 开屏/插屏广告，规则见 conf/loon-routing.conf
+#!author = loon_script contributors
+#!date = 2026-10-29
+#!tag = 广告拦截,QQ音乐
+#!loon_version = 3.5.1(983)
+#!system = iOS,iPadOS
+
+# 插件只负责路径级改写与 MITM；广告域 REJECT 与代理分流在 conf/loon-routing.conf，
+# 需合并到主配置 [Rule] 最前面，否则可能被 GEOIP/FINAL 等规则抢先匹配。
+# 开屏素材必须用 reject，返回透明图仍会触发开屏容器。
+
+[Rewrite]
+^https?://us\.l\.qq\.com/exapp reject
+^https?://y\.gtimg\.cn/music/common/upload/t_splash_info/ reject
+^https?://.+?/music/common/upload/t_splash_info/ reject
+^https?://y\.gtimg\.cn/music/common/upload/targeted_ads reject-img
+^https?://y\.gtimg\.cn/music/common//upload/kg_ad/.*?\d{4}\.jpg reject-img
+^https?://(music|tmead|tmeadcomm)\.y\.qq\.com/maproxy/getPbCompressAd reject
+
+[Mitm]
+hostname = us.l.qq.com, y.gtimg.cn, music.y.qq.com, tmead.y.qq.com, tmeadcomm.y.qq.com
