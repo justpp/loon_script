@@ -21,6 +21,20 @@
 | `plugins/tencent-comic-ads.plugin` | 腾讯动漫开屏/插屏路径改写 + MITM |
 | `conf/loon-routing.conf` | 广告域 REJECT、分流规则、两个 select 策略组、插件引用 |
 
+### Raw 链接
+
+QQ音乐：
+
+```
+https://raw.githubusercontent.com/justpp/loon_script/main/plugins/qqmusic-ads.plugin
+```
+
+腾讯动漫：
+
+```
+https://raw.githubusercontent.com/justpp/loon_script/main/plugins/tencent-comic-ads.plugin
+```
+
 功能：
 
 - 去除两个 App 的开屏与插屏广告（保守范围，不动 banner/信息流）
@@ -29,7 +43,7 @@
 
 ### 安装
 
-1. Loon →「配置」→「插件」，导入两个 `.plugin`（本地文件或 raw URL）。
+1. Loon →「配置」→「插件」，导入两个 `.plugin`（本地文件或上面的 raw 链接）。
 2. 打开 `conf/loon-routing.conf`，按文件顶部注释合并三段内容：
    - `[Proxy Group]` 追加到主配置，把 `<自动选择组名或节点名>` 换成你已有的代理组；
    - `[Rule]` **整段粘贴到主配置 `[Rule]` 的最前面**，必须在 `GEOIP`、`DOMAIN-SUFFIX`、`FINAL` 之前；
